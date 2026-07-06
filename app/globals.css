@@ -1,26 +1,167 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-void: #120d09;
+  --color-panel: #1e1610;
+  --color-panel-raised: #2a1e14;
+  --color-leather: #3b2a1d;
+  --color-brass: #b8860b;
+  --color-brass-light: #e8c165;
+  --color-brass-dark: #7a5a12;
+  --color-copper: #b5651d;
+  --color-copper-light: #d98a4a;
+  --color-parchment: #e8d9b5;
+  --color-ink: #cbb98a;
+  --color-ink-dim: #8f7c56;
+  --color-rust: #8a3324;
+  --color-verdigris: #4c7a6d;
+
+  --font-display: var(--font-cinzel);
+  --font-body: var(--font-crimson);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-void: var(--color-void);
+  --color-panel: var(--color-panel);
+  --color-panel-raised: var(--color-panel-raised);
+  --color-leather: var(--color-leather);
+  --color-brass: var(--color-brass);
+  --color-brass-light: var(--color-brass-light);
+  --color-brass-dark: var(--color-brass-dark);
+  --color-copper: var(--color-copper);
+  --color-copper-light: var(--color-copper-light);
+  --color-parchment: var(--color-parchment);
+  --color-ink: var(--color-ink);
+  --color-ink-dim: var(--color-ink-dim);
+  --color-rust: var(--color-rust);
+  --color-verdigris: var(--color-verdigris);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% -10%, rgba(184, 134, 11, 0.12), transparent),
+    radial-gradient(ellipse 60% 50% at 100% 0%, rgba(76, 122, 109, 0.08), transparent),
+    repeating-linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.15) 0px,
+      rgba(0, 0, 0, 0.15) 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    var(--color-void);
+  color: var(--color-parchment);
+  font-family: var(--font-body);
+}
+
+/* Riveted brass panel used for cards / sections */
+.rivet-panel {
+  position: relative;
+  background:
+    linear-gradient(160deg, var(--color-panel-raised), var(--color-panel) 60%);
+  border: 1px solid var(--color-brass-dark);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(232, 193, 101, 0.08),
+    0 12px 24px -12px rgba(0, 0, 0, 0.7);
+}
+
+.rivet-panel::before,
+.rivet-panel::after,
+.rivet-corner-tl::before,
+.rivet-corner-br::after {
+  content: "";
+}
+
+.rivet {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, var(--color-brass-light), var(--color-brass-dark) 75%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.brass-text {
+  background: linear-gradient(180deg, var(--color-brass-light), var(--color-brass) 55%, var(--color-brass-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.section-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-copper-light);
+}
+
+.gauge-track {
+  background: linear-gradient(90deg, var(--color-void), var(--color-leather));
+  border: 1px solid var(--color-brass-dark);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.gauge-fill {
+  background: linear-gradient(90deg, var(--color-copper), var(--color-brass-light));
+  box-shadow: 0 0 8px rgba(232, 193, 101, 0.5);
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-slow-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+
+.animate-spin-slow-reverse {
+  animation: spin-slow-reverse 24s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow,
+  .animate-spin-slow-reverse {
+    animation: none;
+  }
+}
+
+::selection {
+  background: var(--color-brass);
+  color: var(--color-void);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-brass-dark), var(--color-brass));
+  border-radius: 999px;
 }
